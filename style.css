@@ -1,0 +1,60 @@
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --accent1: #ff3b30;
+  --accent2: #34c759;
+  --accent3: #007aff;
+  --accent4: #ff9500;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e;
+    --fg: #f2f2f7;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.widget-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 120px);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.countdown {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent1) 0deg, #ccc 0deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.countdown[data-color="1"] { --accent: var(--accent1); }
+.countdown[data-color="2"] { --accent: var(--accent2); }
+.countdown[data-color="3"] { --accent: var(--accent3); }
+.countdown[data-color="4"] { --accent: var(--accent4); }
+
+.hidden {
+  display: none;
+}
+
+#expanded-view {
+  margin-top: 2rem;
+}
