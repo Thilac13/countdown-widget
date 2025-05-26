@@ -3,64 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Countdown Widget</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
+  <title>Countdown Widget</title>
 </head>
 <body>
   <div class="countdown-grid">
     <div class="countdown" id="countdown-1">
-      <svg width="120" height="120">
-        <circle class="bg" cx="60" cy="60" r="50" />
-        <circle class="fg" cx="60" cy="60" r="50" />
-      </svg>
+      <svg><circle class="bg" cx="60" cy="60" r="50" /><circle class="fg" cx="60" cy="60" r="50" /></svg>
       <div class="countdown-number">0</div>
     </div>
-
     <div class="countdown" id="countdown-2">
-      <svg width="120" height="120">
-        <circle class="bg" cx="60" cy="60" r="50" />
-        <circle class="fg" cx="60" cy="60" r="50" />
-      </svg>
+      <svg><circle class="bg" cx="60" cy="60" r="50" /><circle class="fg" cx="60" cy="60" r="50" /></svg>
       <div class="countdown-number">0</div>
     </div>
-
     <div class="countdown" id="countdown-3">
-      <svg width="120" height="120">
-        <circle class="bg" cx="60" cy="60" r="50" />
-        <circle class="fg" cx="60" cy="60" r="50" />
-      </svg>
+      <svg><circle class="bg" cx="60" cy="60" r="50" /><circle class="fg" cx="60" cy="60" r="50" /></svg>
       <div class="countdown-number">0</div>
     </div>
-
     <div class="countdown" id="countdown-4">
-      <svg width="120" height="120">
-        <circle class="bg" cx="60" cy="60" r="50" />
-        <circle class="fg" cx="60" cy="60" r="50" />
-      </svg>
+      <svg><circle class="bg" cx="60" cy="60" r="50" /><circle class="fg" cx="60" cy="60" r="50" /></svg>
       <div class="countdown-number">0</div>
     </div>
   </div>
-
-  <form id="countdown-form">
-        <input type="text" name="name" placeholder="Countdown Name" required />
-        <input type="date" name="date" required />
-        <select name="color" required>
-        <option value="1">Red</option>
-        <option value="2">Green</option>
-        <option value="3">Blue</option>
-        <option value="4">Orange</option>
-        </select>
-        <button type="submit">Add Countdown</button>
- </form>
-
-
-  <!-- Hidden panel for expanded view -->
-  <div id="expanded-view" class="hidden">
-    <h2>All Countdown Details</h2>
-    <ul id="countdown-list"></ul>
-  </div>
-
   <script src="script.js"></script>
 </body>
 </html>

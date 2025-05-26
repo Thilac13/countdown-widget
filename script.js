@@ -1,10 +1,19 @@
-// Sample countdowns
 const countdowns = [
   { name: "GOST Exam", date: "2025-06-24", color: 1 },
   { name: "Graduation", date: "2025-07-07", color: 2 },
   { name: "MIST", date: "2025-08-10", color: 3 },
   { name: "FMGe", date: "2025-12-31", color: 4 }
 ];
+
+function getAccentColor(colorId) {
+  switch (colorId) {
+    case 1: return '#ff3b30'; // red
+    case 2: return '#34c759'; // green
+    case 3: return '#0a84ff'; // blue
+    case 4: return '#ffd60a'; // yellow
+    default: return '#8e8e93'; // gray
+  }
+}
 
 function daysRemaining(targetDate) {
   const now = new Date();
@@ -15,35 +24,26 @@ function daysRemaining(targetDate) {
 
 function updateCountdowns() {
   countdowns.forEach((cd, index) => {
-    const el = document.getElementById(`countdown-${index + 1}`);
-    if (!el) return;
-
-    const svg = el.querySelector("svg");
-    const fg = svg.querySelector(".fg");
-    const text = el.querySelector(".countdown-number");
+    const id = `countdown-${index + 1}`;
+    const el = document.getElementById(id);
+    const numberEl = el.querySelector(".countdown-number");
+    const fg = el.querySelector(".fg");
 
     const days = daysRemaining(cd.date);
-    const totalDays = 100; // Customizable
+    numberEl.textContent = days;
+
+    const totalDays = 365;
     const progress = Math.min(days / totalDays, 1);
 
-    const circleLength = 2 * Math.PI * 50;
-    fg.style.strokeDasharray = circleLength;
-    fg.style.strokeDashoffset = circleLength * (1 - progress);
-    fg.style.stroke = `var(--accent${cd.color})`;
+    const radius = 50;
+    const circumference = 2 * Math.PI * radius;
+    fg.style.strokeDasharray = circumference;
+    fg.style.strokeDashoffset = circumference - (progress * circumference);
 
-    text.textContent = days;
-    text.style.color = `var(--accent${cd.color})`;
-
-    el.onclick = () => {
-      document.getElementById("expanded-view").classList.remove("hidden");
-      const list = document.getElementById("countdown-list");
-      list.innerHTML = countdowns.map(c => {
-        const d = daysRemaining(c.date);
-        return `<li style="color: var(--accent${c.color})">${c.name}: ${d} days left</li>`;
-      }).join("");
-    };
+    const color = getAccentColor(cd.color);
+    el.style.setProperty('--accent-color', color);
   });
 }
 
 updateCountdowns();
-setInterval(updateCountdowns, 60 * 60 * 1000); // Update hourly
+setInterval(updateCountdowns, 1000 * 60 * 60);
