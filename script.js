@@ -1,7 +1,7 @@
 // Example countdowns (replace with real user input logic later)
 const countdowns = [
   { name: "GOST Exam", date: "2025-06-24", color: 1 },
-  { name: "Graduation", date: "2025-07-7", color: 2 },
+  { name: "Graduation", date: "2025-07-07", color: 2 },
   { name: "MIST", date: "2025-08-10", color: 3 },
   { name: "FMGe", date: "2025-12-31", color: 4 }
 ];
