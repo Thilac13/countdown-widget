@@ -57,7 +57,8 @@ function updateCountdowns() {
     el.style.setProperty('--accent-color', color);
 
     // Show expanded view on click
-    el.onclick = () => {
+    el.onclick = (e) => {
+      e.stopPropagation(); // Prevent closing from global click handler
       const expanded = document.getElementById("expanded-view");
       expanded.classList.remove("hidden");
 
@@ -71,7 +72,7 @@ function updateCountdowns() {
   });
 }
 
-// Hide expanded view if click outside
+// Hide expanded view if clicking outside
 document.addEventListener("click", (e) => {
   const expanded = document.getElementById("expanded-view");
   const wrapper = document.getElementById("countdown-list-wrapper");
@@ -86,7 +87,17 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Initialize
+// Prevent closing when clicking inside the expanded view
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.getElementById("countdown-list-wrapper");
+  if (wrapper) {
+    wrapper.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  }
+});
+
+// Init
 loadCountdowns();
 updateCountdowns();
-setInterval(updateCountdowns, 1000 * 60 * 60);
+setInterval(updateCountdowns, 1000 * 60 * 60); // Update hourly
