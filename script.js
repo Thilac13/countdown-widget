@@ -1,25 +1,26 @@
+// Predefined countdowns (customize as needed)
 const countdowns = [
-  { name: "GOST Exam", date: "2025-06-24", color: 1 },
-  { name: "Graduation", date: "2025-07-07", color: 2 },
-  { name: "MIST", date: "2025-08-10", color: 3 },
-  { name: "FMGe", date: "2025-12-31", color: 4 }
+  { name: "GOST Exam", date: "2025-06-24", color: "red" },
+  { name: "Graduation", date: "2025-07-07", color: "green" },
+  { name: "MIST", date: "2025-08-10", color: "blue" },
+  { name: "FMGe", date: "2025-12-31", color: "yellow" }
 ];
-
-function getAccentColor(colorId) {
-  switch (colorId) {
-    case 1: return '#ff3b30'; // red
-    case 2: return '#34c759'; // green
-    case 3: return '#0a84ff'; // blue
-    case 4: return '#ffd60a'; // yellow
-    default: return '#8e8e93'; // gray
-  }
-}
 
 function daysRemaining(targetDate) {
   const now = new Date();
   const then = new Date(targetDate);
   const diff = then - now;
   return Math.max(Math.ceil(diff / (1000 * 60 * 60 * 24)), 0);
+}
+
+function getAccentColor(colorName) {
+  switch (colorName.toLowerCase()) {
+    case "red": return "#ff3b30";
+    case "green": return "#34c759";
+    case "blue": return "#007aff";
+    case "yellow": return "#ffcc00";
+    default: return "#ffffff";
+  }
 }
 
 function updateCountdowns() {
@@ -42,8 +43,36 @@ function updateCountdowns() {
 
     const color = getAccentColor(cd.color);
     el.style.setProperty('--accent-color', color);
+
+    // Add click to show expanded view
+    el.onclick = () => {
+      const expanded = document.getElementById("expanded-view");
+      expanded.classList.remove("hidden");
+
+      const list = document.getElementById("countdown-list");
+      list.innerHTML = countdowns.map(c => {
+        const d = daysRemaining(c.date);
+        const clr = getAccentColor(c.color);
+        return `<li style="color: ${clr}">${c.name}: ${d} days left</li>`;
+      }).join("");
+    };
   });
 }
 
+// Close expanded view when clicking outside the list wrapper
+document.addEventListener("click", (e) => {
+  const expanded = document.getElementById("expanded-view");
+  const wrapper = document.getElementById("countdown-list-wrapper");
+
+  if (
+    expanded &&
+    wrapper &&
+    !expanded.classList.contains("hidden") &&
+    !wrapper.contains(e.target)
+  ) {
+    expanded.classList.add("hidden");
+  }
+});
+
 updateCountdowns();
-setInterval(updateCountdowns, 1000 * 60 * 60);
+setInterval(updateCountdowns, 1000 * 60 * 60); // Update hourly
