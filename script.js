@@ -1,10 +1,22 @@
-// Predefined countdowns (customize as needed)
-const countdowns = [
+const defaultCountdowns = [
   { name: "GOST Exam", date: "2025-06-24", color: "red" },
   { name: "Graduation", date: "2025-07-07", color: "green" },
   { name: "MIST", date: "2025-08-10", color: "blue" },
   { name: "FMGe", date: "2025-12-31", color: "yellow" }
 ];
+
+let countdowns = [];
+
+// Load from localStorage or fallback to defaults
+function loadCountdowns() {
+  const saved = localStorage.getItem("countdowns");
+  countdowns = saved ? JSON.parse(saved) : defaultCountdowns;
+}
+
+// Save current countdowns to localStorage
+function saveCountdowns() {
+  localStorage.setItem("countdowns", JSON.stringify(countdowns));
+}
 
 function daysRemaining(targetDate) {
   const now = new Date();
@@ -44,7 +56,7 @@ function updateCountdowns() {
     const color = getAccentColor(cd.color);
     el.style.setProperty('--accent-color', color);
 
-    // Add click to show expanded view
+    // Show expanded view on click
     el.onclick = () => {
       const expanded = document.getElementById("expanded-view");
       expanded.classList.remove("hidden");
@@ -59,7 +71,7 @@ function updateCountdowns() {
   });
 }
 
-// Close expanded view when clicking outside the list wrapper
+// Hide expanded view if click outside
 document.addEventListener("click", (e) => {
   const expanded = document.getElementById("expanded-view");
   const wrapper = document.getElementById("countdown-list-wrapper");
@@ -74,5 +86,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// Initialize
+loadCountdowns();
 updateCountdowns();
-setInterval(updateCountdowns, 1000 * 60 * 60); // Update hourly
+setInterval(updateCountdowns, 1000 * 60 * 60);
