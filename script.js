@@ -1,4 +1,4 @@
-// Example countdowns (replace with real user input logic later)
+// Sample countdowns
 const countdowns = [
   { name: "GOST Exam", date: "2025-06-24", color: 1 },
   { name: "Graduation", date: "2025-07-07", color: 2 },
@@ -15,18 +15,25 @@ function daysRemaining(targetDate) {
 
 function updateCountdowns() {
   countdowns.forEach((cd, index) => {
-    const id = `countdown-${index + 1}`;
-    const el = document.getElementById(id);
+    const el = document.getElementById(`countdown-${index + 1}`);
+    if (!el) return;
+
+    const svg = el.querySelector("svg");
+    const fg = svg.querySelector(".fg");
+    const text = el.querySelector(".countdown-number");
+
     const days = daysRemaining(cd.date);
+    const totalDays = 100; // Customizable
+    const progress = Math.min(days / totalDays, 1);
 
-    const totalDays = 365; // Assume a max range for demo
-    const progress = Math.min(360 * (1 - days / totalDays), 360);
+    const circleLength = 2 * Math.PI * 50;
+    fg.style.strokeDasharray = circleLength;
+    fg.style.strokeDashoffset = circleLength * (1 - progress);
+    fg.style.stroke = `var(--accent${cd.color})`;
 
-    el.style.background = `conic-gradient(var(--accent${cd.color}) ${progress}deg, #ccc ${progress}deg)`;
-    el.textContent = days;
-    el.dataset.color = cd.color;
+    text.textContent = days;
+    text.style.color = `var(--accent${cd.color})`;
 
-    // Add click to show expanded view
     el.onclick = () => {
       document.getElementById("expanded-view").classList.remove("hidden");
       const list = document.getElementById("countdown-list");
@@ -39,4 +46,4 @@ function updateCountdowns() {
 }
 
 updateCountdowns();
-setInterval(updateCountdowns, 1000 * 60 * 60); // Update hourly
+setInterval(updateCountdowns, 60 * 60 * 1000); // Update hourly
